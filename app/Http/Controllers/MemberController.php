@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\Validator;
 
-class PeminjamanController extends Controller
+class MemberController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,8 +20,8 @@ class PeminjamanController extends Controller
      */
     public function index()
     {
-        return view('dashboard.peminjaman.index', [
-            'data' => User::where('user_id', auth()->user()->id)->with('users'),
+        return view('dashboard.member.koleksi', [
+            'data' => Buku::all(),
         ]);
     }
 
@@ -101,27 +101,52 @@ class PeminjamanController extends Controller
                 // dd($item);
                 return $item->nama_buku;
             })
-            ->addColumn('nama_peminjam', function ($item) {
+            ->addColumn('author', function ($item) {
                 // dd($item->users);
-                return $item->users->nama;
+                return $item->author;
             })
-            ->addColumn('tanggal_pinjam', function ($item) {
+            ->addColumn('deskripsi', function ($item) {
                 // dd($item->users);
-                return $item->tanggal_pinjam;
-            })
-            ->addColumn('tanggal_kembali', function ($item) {
-                // dd($item);
-                return $item->tanggal_kembali;
-            })
-            ->addColumn('denda', function ($item) {
-                // dd($item);
-                return $item->denda;
+                return $item->deskripsi;
             })
             ->addColumn('action', function ($item) {
-                $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $item->id . '" data-original-title="Konfirmasi" class="edit btn btn-primary btn-sm KonfirmPost">Konfirmasi</a>';
+                $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $item->id . '" data-original-title="Konfirmasi" class="edit btn btn-primary btn-sm KonfirmPost">Pinjam</a>';
 
                 return $btn;
             })
+            ->addIndexColumn()
+            ->make(true);
+    }
+
+    public function listPinjam(){
+        $list_data = Buku::all();
+
+        return Datatables::of($list_data)
+            ->addColumn('nama_buku', function ($item) {
+                // dd($item);
+                return $item->nama_buku;
+            })
+            ->addColumn('tanggal_pinjam', function ($item) {
+                // dd($item->users);
+                return $item->peminjaman->tanggal_pinjam;
+            })
+            ->addColumn('tanggal_kembali', function ($item) {
+                // dd($item->users);
+                return $item->peminjaman->tanggal_kembali;
+            })
+            ->addColumn('tanggal_kembali', function ($item) {
+                // dd($item->users);
+                return $item->peminjaman->status;
+            })
+            ->addColumn('tanggal_kembali', function ($item) {
+                // dd($item->users);
+                return $item->peminjaman->denda;
+            })
+            // ->addColumn('action', function ($item) {
+            //     $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $item->id . '" data-original-title="Konfirmasi" class="edit btn btn-primary btn-sm KonfirmPost">Bayar Denda</a>';
+
+            //     return $btn;
+            // })
             ->addIndexColumn()
             ->make(true);
     }
