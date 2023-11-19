@@ -154,29 +154,6 @@
                     </div>
                 </div>
             </div>
-            {{-- Delete Modal --}}
-            {{-- <div class="modal fade" id="deleteAdminModal" tabindex="-1">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <form action="/add-admin" method="GET" id="deleteAdminForm">
-                            @csrf
-                            <div class="modal-header">
-                                <h5 class="modal-title">Hapus Data</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <p>Apakah yakin ingin menghapus data ?</p>
-                            </div>
-                            <input type="hidden" class="form-control" id="id" name="id" required>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                <button type="submit" id="deleteAdminBtn" class="btn btn-primary">Hapus</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div> --}}
         </div>
     </div>
     @push('scripts')
@@ -270,29 +247,6 @@
                     });
                 });
 
-                // $('body').on('click', '.deleteAdmin', function() {
-                //     var id = $(this).data("id");
-                //     confirm("Apakah anda yakin ingin menghapus data?");
-                //     $.ajax({
-                //         type: "DELETE",
-                //         url: "/dt/add-admin" + '/' + id,
-                //         success: function(data) {
-                //             $("#success").removeClass('d-none');
-                //             $("#success").text(data.success);
-                //             var oTable = $('#primary_table').dataTable();
-                //             oTable.fnDraw(false);
-                //             $("#simpanAdminBtn").html('Simpan');
-                //             $("#simpanAdminBtn").attr("disabled", false);
-                //             $("#editAdminBtn").html('Simpan');
-                //             $("#editAdminBtn").attr("disabled", false);
-                //             $("#logoutBtn").html('Simpan');
-                //             $("#logoutBtn").attr("disabled", false);
-                //         },
-                //         error: function(data) {
-                //             console.log('Error:', data);
-                //         }
-                //     });
-                // });
 
                 $(document).on('click', '.deleteAdminPost', function(e) {
                     var id = $(this).data('id');

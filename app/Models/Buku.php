@@ -16,7 +16,8 @@ class Buku extends Model
     protected $fillable = [
         'nama_buku',
         'author',
-        'user_id'
+        'user_id',
+        'deskripsi',
     ];
 
     public function users()
