@@ -52,18 +52,6 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="example-text-input-small" class="col-3 col-form-label">Deskripsi</label>
-                                    <div class="col-9">
-                                        <textarea class="form-control @error('deskripsi') is-invalid @enderror" type="text" id="deskripsi" name="deskripsi"
-                                            placeholder="Masukkan deskripsi..."value="{{ old('deskripsi') }}" rows="3" required></textarea>
-                                        @error('deskripsi')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="form-group row">
                                     <div class="col-3"></div>
                                     <div class="col-9">
                                         <button type="submit" class="btn btn-primary waves-effect waves-light"
@@ -87,8 +75,7 @@
                                 <th class="sorting_asc" tabindex="0" rowspan="1" colspan="1" aria-sort="ascending"
                                     aria-label="Name: activate to sort column descending" style="width: 158.5px;">Author
                                 </th>
-                                <th class="sorting" tabindex="0" rowspan="1" colspan="1"
-                                    style="width: 158.5px;">
+                                <th class="sorting" tabindex="0" rowspan="1" colspan="1" style="width: 158.5px;">
                                     Aksi
                                 </th>
                             </tr>
@@ -103,7 +90,7 @@
 
     {{-- Edit Modal --}}
     <div class="modal fade" id="editBukuModal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <form action="/manajemen-buku" method="POST" id="editBukuForm" name="editBukuForm">
                     @csrf
@@ -126,12 +113,6 @@
                                     <div class="col-9">
                                         <input type="text" class="form-control" id="edit_author" name="author"
                                             required>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="deskripsi" class="col-3 col-form-label">Deskripsi</label>
-                                    <div class="col-9">
-                                        <textarea class="form-control" id="edit_deskripsi" name="deskripsi" rows="3"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -193,7 +174,6 @@
                         $('#id').val(data.id);
                         $('#edit_nama_buku').val(data.nama_buku);
                         $('#edit_author').val(data.author);
-                        $('#edit_deskripsi').val(data.deskripsi);
                     })
                 });
 

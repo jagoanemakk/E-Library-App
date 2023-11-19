@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\Validator;
 
-class MemberController extends Controller
+class PeminjamanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,8 +20,8 @@ class MemberController extends Controller
      */
     public function index()
     {
-        return view('dashboard.member.koleksi', [
-            'data' => Buku::all(),
+        return view('dashboard.peminjaman.index', [
+            'data' => User::where('user_id', auth()->user()->id)->with('users'),
         ]);
     }
 
@@ -101,52 +101,27 @@ class MemberController extends Controller
                 // dd($item);
                 return $item->nama_buku;
             })
-            ->addColumn('author', function ($item) {
+            ->addColumn('nama_peminjam', function ($item) {
                 // dd($item->users);
-                return $item->author;
-            })
-            ->addColumn('deskripsi', function ($item) {
-                // dd($item->users);
-                return $item->deskripsi;
-            })
-            ->addColumn('action', function ($item) {
-                $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $item->id . '" data-original-title="Konfirmasi" class="edit btn btn-primary btn-sm KonfirmPost">Pinjam</a>';
-
-                return $btn;
-            })
-            ->addIndexColumn()
-            ->make(true);
-    }
-
-    public function listPinjam(){
-        $list_data = Buku::all();
-
-        return Datatables::of($list_data)
-            ->addColumn('nama_buku', function ($item) {
-                // dd($item);
-                return $item->nama_buku;
+                return $item->users->nama;
             })
             ->addColumn('tanggal_pinjam', function ($item) {
                 // dd($item->users);
-                return $item->peminjaman->tanggal_pinjam;
+                return $item->tanggal_pinjam;
             })
             ->addColumn('tanggal_kembali', function ($item) {
-                // dd($item->users);
-                return $item->peminjaman->tanggal_kembali;
+                // dd($item);
+                return $item->tanggal_kembali;
             })
-            ->addColumn('tanggal_kembali', function ($item) {
-                // dd($item->users);
-                return $item->peminjaman->status;
+            ->addColumn('denda', function ($item) {
+                // dd($item);
+                return $item->denda;
             })
-            ->addColumn('tanggal_kembali', function ($item) {
-                // dd($item->users);
-                return $item->peminjaman->denda;
-            })
-            // ->addColumn('action', function ($item) {
-            //     $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $item->id . '" data-original-title="Konfirmasi" class="edit btn btn-primary btn-sm KonfirmPost">Bayar Denda</a>';
+            ->addColumn('action', function ($item) {
+                $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $item->id . '" data-original-title="Konfirmasi" class="edit btn btn-primary btn-sm KonfirmPost">Konfirmasi</a>';
 
-            //     return $btn;
-            // })
+                return $btn;
+            })
             ->addIndexColumn()
             ->make(true);
     }

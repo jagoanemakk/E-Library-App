@@ -17,8 +17,51 @@
             @endif --}}
             <div class="card mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="font-weight-bold text-primary">KOLEKSI BUKU</h6>
+                    <h6 class="font-weight-bold text-primary">Peminjaman</h6>
                 </div>
+                {{-- <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12 col-xs-12">
+                            <form action="/manajemen-buku" method="post" id="inputBukuForm">
+                                @csrf
+                                <div class="form-group row">
+                                    <input type="hidden" id="user_id" name="user_id" required>
+                                    <label for="example-text-input-small" class="col-3 col-form-label">Nama Buku</label>
+                                    <div class="col-9">
+                                        <input class="form-control @error('nama_buku') is-invalid @enderror" type="text"
+                                            id="nama_buku" name="nama_buku" placeholder="Masukkan nama buku..."
+                                            required="" value="{{ old('nama_buku') }}">
+                                        @error('nama_buku')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="example-text-input-small" class="col-3 col-form-label">Author</label>
+                                    <div class="col-9">
+                                        <input class="form-control @error('author') is-invalid @enderror" type="text"
+                                            id="author" name="author" placeholder="Masukkan nama author..."
+                                            required="" value="{{ old('author') }}">
+                                        @error('author')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-3"></div>
+                                    <div class="col-9">
+                                        <button type="submit" class="btn btn-primary waves-effect waves-light"
+                                            id="simpanBukuBtn">Simpan</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div> --}}
                 <div class="table-responsive p-3">
                     <table class="table align-items-center table-flush" id="primary_table">
                         <thead class="thead-light">
@@ -30,13 +73,19 @@
                                     aria-label="Name: activate to sort column descending" style="width: 150.5px;">Nama Buku
                                 </th>
                                 <th class="sorting_asc" tabindex="0" rowspan="1" colspan="1" aria-sort="ascending"
-                                    aria-label="Name: activate to sort column descending" style="width: 150.5px;">Author
+                                    aria-label="Name: activate to sort column descending" style="width: 150.5px;">Nama Peminjam
                                 </th>
                                 <th class="sorting_asc" tabindex="0" rowspan="1" colspan="1" aria-sort="ascending"
-                                    aria-label="Name: activate to sort column descending" style="width: 150.5px;">Deskripsi
+                                    aria-label="Name: activate to sort column descending" style="width: 150.5px;">Tanggal Pinjam
+                                </th>
+                                <th class="sorting_asc" tabindex="0" rowspan="1" colspan="1" aria-sort="ascending"
+                                    aria-label="Name: activate to sort column descending" style="width: 150.5px;">Tanggal Kembali
+                                </th>
+                                <th class="sorting_asc" tabindex="0" rowspan="1" colspan="1" aria-sort="ascending"
+                                    aria-label="Name: activate to sort column descending" style="width: 150.5px;">Denda
                                 </th>
                                 <th class="sorting" tabindex="0" rowspan="1" colspan="1" style="width: 150.5px;">
-                                    Aksi
+                                    Status
                                 </th>
                             </tr>
                         </thead>
@@ -113,12 +162,20 @@
                             name: 'nama_buku'
                         },
                         {
-                            data: 'author',
-                            name: 'author'
+                            data: 'nama_peminjam',
+                            name: 'nama_peminjam'
                         },
                         {
-                            data: 'deskripsi',
-                            name: 'deskripsi'
+                            data: 'tanggal_pinjam',
+                            name: 'tanggal_pinjam'
+                        },
+                        {
+                            data: 'tanggal_kembali',
+                            name: 'tanggal_kembali'
+                        },
+                        {
+                            data: 'denda',
+                            name: 'denda'
                         },
                         {
                             data: 'action',

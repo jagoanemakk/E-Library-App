@@ -28,14 +28,9 @@
             {{-- @dd(Auth::user()->hak_akses) --}}
             @if(Auth::user()->hak_akses == 'Member')
             <li class="nav-item">
-                    <a class="nav-link" href="/koleksi">
+                    <a class="nav-link" href="/pinjam-buku">
                         <i class="fas fa-solid fa-book"></i>
-                        <span>Koleksi Buku</span></a>
-                </li>
-            <li class="nav-item">
-                    <a class="nav-link" href="/library">
-                        <i class="fas fa-solid fa-book"></i>
-                        <span>Library Saya</span></a>
+                        <span>Pinjam Buku</span></a>
                 </li>
             @elseif (Auth::user()->hak_akses == 'Super Admin')
                 <!-- Nav Item - Manajemen Buku -->

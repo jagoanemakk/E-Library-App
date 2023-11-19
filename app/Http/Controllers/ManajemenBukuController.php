@@ -19,7 +19,7 @@ class ManajemenBukuController extends Controller
      */
     public function index()
     {
-        return view('dashboard.manajemenBuku.index', [
+        return view('dashboard.manajemen.index', [
             'data' => User::where('user_id', auth()->user()->id)->with('users'),
         ]);
     }
@@ -36,12 +36,10 @@ class ManajemenBukuController extends Controller
             [
                 'nama_buku' => 'required',
                 'author' => 'required',
-                'deskripsi' => 'required',
             ],
             [
                 'nama_buku.required' => 'Nama buku wajib di isi',
                 'author.required' => 'Author wajib di isi',
-                'deskripsi.required' => 'Deskripsi wajib di isi',
             ],
         );
 
@@ -80,12 +78,10 @@ class ManajemenBukuController extends Controller
                 // 'user_id' => "required",
                 'nama_buku' => 'required',
                 'author' => 'required',
-                'deskripsi' => 'required',
             ],
             [
                 'nama_buku.required' => 'Nama wajib di isi',
                 'author.required' => 'Author wajib di isi',
-                'deskripsi.required' => 'Deskripsi wajib di isi',
             ],
         );
 
@@ -98,12 +94,18 @@ class ManajemenBukuController extends Controller
             ]);
         }
 
+        // dd($data);
+        // $data->update([
+        //     'user_id' => auth()->user()->id,
+        //     'nama_buku' => $request->input('nama_buku'),
+        //     'author' => $request->input('author'),
+        // ]);
+
         // dd($validatedData);
         $validatedData = Buku::find($request->id);
         $validatedData['user_id'] = auth()->user()->id;
         $validatedData['nama_buku'] = $request->input('nama_buku');
         $validatedData['author'] = $request->input('author');
-        $validatedData['deskripsi'] = $request->input('deskripsi');
         $validatedData->save();
         // Buku::where('id', $request->id)->update($validatedData);
 

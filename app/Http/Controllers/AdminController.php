@@ -31,7 +31,7 @@ class AdminController extends Controller
         );
 
         $validatedData['password'] = Hash::make($validatedData['password']);
-        $validatedData['hak_akses'] = 'Member';
+        $validatedData['hak_akses'] = 'Admin';
 
         User::create($validatedData);
 

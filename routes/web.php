@@ -4,7 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ManajemenBukuController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\MemberController;
+use App\Http\Controllers\PeminjamanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -57,7 +57,7 @@ Route::middleware(['auth', 'auth.admin'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/manajemen-buku', [ManajemenBukuController::class, 'index']);
     Route::post('/manajemen-buku', [ManajemenBukuController::class, 'store']);
-    Route::get('/koleksi', [MemberController::class, 'index']);
+    Route::get('/peminjaman', [PeminjamanController::class, 'index']);
 
     Route::prefix('dx')->group(function () {
         // Route Manajemen Buku
@@ -67,8 +67,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/manajemen-buku', [ManajemenBukuController::class, 'listBuku']);
     });
     
-    // Route Member
+    // Route Peminjaman
     Route::prefix('xt')->group(function () {
-        Route::get('/peminjaman', [MemberController::class, 'listBuku']);
+        Route::get('/peminjaman', [PeminjamanController::class, 'listBuku']);
     });
 });
