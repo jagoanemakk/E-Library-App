@@ -5,20 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Buku extends Model
+class Peminjaman extends Model
 {
     use HasFactory;
 
     protected $guarded = ['id'];
 
-    public $table = "table_buku";
+    public $table = "peminjaman";
 
     protected $fillable = [
-        'nama_buku',
-        'author',
         'user_id',
-        'deskripsi',
-        'status_buku',
+        'buku_id',
+        'tanggal_pinjam',
+        'tanggal_kembali',
+        'denda',
+        'status_pinjam',
     ];
 
     public function users()
@@ -26,8 +27,8 @@ class Buku extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function transaksi()
+    public function buku()
     {
-        return $this->belongsTo(Peminjaman::class, 'buku_id', 'id');
+        return $this->belongsTo(Buku::class, 'buku_id', 'id');
     }
 }

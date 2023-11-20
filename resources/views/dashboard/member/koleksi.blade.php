@@ -35,6 +35,9 @@
                                 <th class="sorting_asc" tabindex="0" rowspan="1" colspan="1" aria-sort="ascending"
                                     aria-label="Name: activate to sort column descending" style="width: 150.5px;">Deskripsi
                                 </th>
+                                <th class="sorting_asc" tabindex="0" rowspan="1" colspan="1" aria-sort="ascending"
+                                    aria-label="Name: activate to sort column descending" style="width: 150.5px;">Status
+                                </th>
                                 <th class="sorting" tabindex="0" rowspan="1" colspan="1" style="width: 150.5px;">
                                     Aksi
                                 </th>
@@ -101,7 +104,7 @@
                 $('#primary_table').DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: "/xt/peminjaman",
+                    ajax: "/xt/koleksi",
                     columns: [{
                             data: 'DT_RowIndex',
                             name: 'DT_RowIndex',
@@ -121,6 +124,10 @@
                             name: 'deskripsi'
                         },
                         {
+                            data: 'status_buku',
+                            name: 'status_buku'
+                        },
+                        {
                             data: 'action',
                             name: 'action',
                             orderable: false
@@ -129,6 +136,11 @@
                     order: [
                         [0, 'asc']
                     ]
+                });
+
+                $(document).on('click', '.pinjamBuku', function(e) {
+                    var id = $(this).data('id');
+                    console.log('ok');
                 });
 
                 // $('body').on('click', '.editBukuPost', function() {

@@ -40,4 +40,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Buku::class, 'id', 'user_id');
     }
+
+    public function transaksi()
+    {
+        return $this->hasMany(Peminjaman::class, 'id',);
+    }
 }
