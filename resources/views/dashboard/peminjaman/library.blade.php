@@ -17,7 +17,7 @@
             @endif --}}
             <div class="card mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="font-weight-bold text-primary">KOLEKSI BUKU</h6>
+                    <h6 class="font-weight-bold text-primary">DAFTAR LIBRARY</h6>
                 </div>
                 <div class="table-responsive p-3">
                     <table class="table align-items-center table-flush" id="primary_table">
@@ -30,10 +30,16 @@
                                     aria-label="Name: activate to sort column descending" style="width: 150.5px;">Nama Buku
                                 </th>
                                 <th class="sorting_asc" tabindex="0" rowspan="1" colspan="1" aria-sort="ascending"
-                                    aria-label="Name: activate to sort column descending" style="width: 150.5px;">Author
+                                    aria-label="Name: activate to sort column descending" style="width: 150.5px;">Tanggal Pinjam
                                 </th>
                                 <th class="sorting_asc" tabindex="0" rowspan="1" colspan="1" aria-sort="ascending"
-                                    aria-label="Name: activate to sort column descending" style="width: 150.5px;">Deskripsi
+                                    aria-label="Name: activate to sort column descending" style="width: 150.5px;">Tanggal Kembali
+                                </th>
+                                <th class="sorting_asc" tabindex="0" rowspan="1" colspan="1" aria-sort="ascending"
+                                    aria-label="Name: activate to sort column descending" style="width: 150.5px;">Denda
+                                </th>
+                                <th class="sorting_asc" tabindex="0" rowspan="1" colspan="1" aria-sort="ascending"
+                                    aria-label="Name: activate to sort column descending" style="width: 150.5px;">Status
                                 </th>
                                 <th class="sorting" tabindex="0" rowspan="1" colspan="1" style="width: 150.5px;">
                                     Aksi
@@ -101,7 +107,7 @@
                 $('#primary_table').DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: "/xt/peminjaman",
+                    ajax: "/xt/library",
                     columns: [{
                             data: 'DT_RowIndex',
                             name: 'DT_RowIndex',
@@ -113,12 +119,20 @@
                             name: 'nama_buku'
                         },
                         {
-                            data: 'author',
-                            name: 'author'
+                            data: 'tanggal_pinjam',
+                            name: 'tanggal_pinjam'
                         },
                         {
-                            data: 'deskripsi',
-                            name: 'deskripsi'
+                            data: 'tanggal_kembali',
+                            name: 'tanggal_kembali'
+                        },
+                        {
+                            data: 'denda',
+                            name: 'denda'
+                        },
+                        {
+                            data: 'status',
+                            name: 'status'
                         },
                         {
                             data: 'action',
