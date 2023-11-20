@@ -35,10 +35,6 @@ class AdminController extends Controller
 
         User::create($validatedData);
 
-        // return response()->json([
-        //     'success' => 'Data berhasil ditambahkan',
-        // ]);
-
         return redirect('/add-admin')->with('success', 'Akun berhasil ditambahkan');
 
     }

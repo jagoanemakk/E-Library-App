@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Buku;
+use App\Models\Peminjaman;
 use App\Models\User;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
@@ -25,6 +26,13 @@ class MemberController extends Controller
         ]);
     }
 
+    public function library()
+    {
+        return view('dashboard.peminjaman.library', [
+            // 'data' => Buku::all(),
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -43,7 +51,9 @@ class MemberController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $book = Buku::find($request->id);
+
+        return response()->json($book);
     }
 
     /**
@@ -91,10 +101,10 @@ class MemberController extends Controller
         //
     }
 
-    public function listBuku()
+    public function listKoleksi()
     {
         // $list_data = Buku::where('user_id', auth()->user()->id)->with('users');
-        $list_data = Buku::all();
+        $list_data = Buku::where('status_buku', '=', 'Ada');
 
         return Datatables::of($list_data)
             ->addColumn('nama_buku', function ($item) {
@@ -109,8 +119,12 @@ class MemberController extends Controller
                 // dd($item->users);
                 return $item->deskripsi;
             })
+            ->addColumn('status', function ($item) {
+                // dd($item->users);
+                return $item->status_buku;
+            })
             ->addColumn('action', function ($item) {
-                $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $item->id . '" data-original-title="Konfirmasi" class="edit btn btn-primary btn-sm KonfirmPost">Pinjam</a>';
+                $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $item->id . '" data-original-title="Pinjam" class="edit btn btn-primary btn-sm pinjamBuku">Pinjam</a>';
 
                 return $btn;
             })
@@ -118,35 +132,37 @@ class MemberController extends Controller
             ->make(true);
     }
 
-    public function listPinjam(){
-        $list_data = Buku::all();
+    public function listPinjam()
+    {
+        $list_data = Peminjaman::where('user_id', auth()->user()->id)
+        ->with('users', 'buku');
 
         return Datatables::of($list_data)
             ->addColumn('nama_buku', function ($item) {
                 // dd($item);
-                return $item->nama_buku;
+                return $item->buku->nama_buku;
             })
             ->addColumn('tanggal_pinjam', function ($item) {
                 // dd($item->users);
-                return $item->peminjaman->tanggal_pinjam;
+                return $item->tanggal_pinjam;
             })
             ->addColumn('tanggal_kembali', function ($item) {
                 // dd($item->users);
-                return $item->peminjaman->tanggal_kembali;
+                return $item->tanggal_kembali;
             })
-            ->addColumn('tanggal_kembali', function ($item) {
+            ->addColumn('status', function ($item) {
                 // dd($item->users);
-                return $item->peminjaman->status;
+                return $item->status_pinjam;
             })
-            ->addColumn('tanggal_kembali', function ($item) {
+            ->addColumn('denda', function ($item) {
                 // dd($item->users);
-                return $item->peminjaman->denda;
+                return $item->denda;
             })
-            // ->addColumn('action', function ($item) {
-            //     $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $item->id . '" data-original-title="Konfirmasi" class="edit btn btn-primary btn-sm KonfirmPost">Bayar Denda</a>';
+            ->addColumn('action', function ($item) {
+                $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $item->id . '" data-original-title="Bayar Denda" class="edit btn btn-primary btn-sm bayarDenda">Bayar Denda</a>';
 
-            //     return $btn;
-            // })
+                return $btn;
+            })
             ->addIndexColumn()
             ->make(true);
     }

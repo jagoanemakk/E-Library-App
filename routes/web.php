@@ -58,6 +58,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/manajemen-buku', [ManajemenBukuController::class, 'index']);
     Route::post('/manajemen-buku', [ManajemenBukuController::class, 'store']);
     Route::get('/koleksi', [MemberController::class, 'index']);
+    Route::get('/library', [MemberController::class, 'library']);
 
     Route::prefix('dx')->group(function () {
         // Route Manajemen Buku
@@ -69,6 +70,8 @@ Route::middleware(['auth'])->group(function () {
     
     // Route Member
     Route::prefix('xt')->group(function () {
-        Route::get('/peminjaman', [MemberController::class, 'listBuku']);
+        Route::get('/koleksi', [MemberController::class, 'listKoleksi']);
+        Route::post('/koleksi', [MemberController::class, 'store']);
+        Route::get('/library', [MemberController::class, 'listPinjam']);
     });
 });
