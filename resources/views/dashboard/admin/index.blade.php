@@ -66,7 +66,6 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <div class="col-3"></div>
                                     <div class="col-9">
                                         <button type="submit" class="btn btn-primary waves-effect waves-light"
                                             id="simpanAdminBtn">Simpan</button>

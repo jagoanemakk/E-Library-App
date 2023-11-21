@@ -15,6 +15,13 @@
                     <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif --}}
+            <div class="form-group row">
+                <div class="col-9">
+                    <button type="submit" class="btn btn-primary" id="pinjamBukuBtn" data-bs-toggle="modal"
+                        data-bs-target="#pinjamBukuModal">Pinjam Buku</button>
+                </div>
+
+            </div>
             <div class="card mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="font-weight-bold text-primary">KOLEKSI BUKU</h6>
@@ -38,9 +45,6 @@
                                 <th class="sorting_asc" tabindex="0" rowspan="1" colspan="1" aria-sort="ascending"
                                     aria-label="Name: activate to sort column descending" style="width: 150.5px;">Status
                                 </th>
-                                <th class="sorting" tabindex="0" rowspan="1" colspan="1" style="width: 150.5px;">
-                                    Aksi
-                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -52,10 +56,10 @@
     </div>
 
     {{-- Edit Modal --}}
-    {{-- <div class="modal fade" id="editBukuModal" tabindex="-1">
+    <div class="modal fade" id="pinjamBukuModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="/manajemen-buku" method="POST" id="editBukuForm" name="editBukuForm">
+                <form action="/koleksi" method="POST" id="pinjamBukuForm" name="pinjamBukuForm">
                     @csrf
                     <div class="modal-header">
                         <h5 class="modal-title">Edit Buku</h5>
@@ -67,15 +71,24 @@
                                 <div class="form-group row">
                                     <label for="example-text-input-small" class="col-3 col-form-label">Nama Buku</label>
                                     <div class="col-9">
-                                        <input type="text" class="form-control" id="edit_nama_buku" name="nama_buku"
-                                            required>
+                                        <select style="width: 100%;" class="js-example-basic-single" id="nama_buku"
+                                            name="nama_buku">
+                                            @foreach ($data as $d)
+                                                <option value="{{ $d->id }}">{{ $d->nama_buku }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="example-text-input-small" class="col-3 col-form-label">Author</label>
+                                    <label for="example-text-input-small" class="col-3 col-form-label">Tgl Pinjam</label>
                                     <div class="col-9">
-                                        <input type="text" class="form-control" id="edit_author" name="author"
-                                            required>
+                                        <input type="text" id="tanggal_pinjam" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="example-text-input-small" class="col-3 col-form-label">Tgl Kembali</label>
+                                    <div class="col-9">
+                                        <input type="text" id="tanggal_kembali" class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -90,7 +103,7 @@
                 </form>
             </div>
         </div>
-    </div> --}}
+    </div>
 
     @push('scripts')
         <script type="text/javascript">
@@ -127,31 +140,12 @@
                             data: 'status_buku',
                             name: 'status_buku'
                         },
-                        {
-                            data: 'action',
-                            name: 'action',
-                            orderable: false
-                        },
                     ],
                     order: [
                         [0, 'asc']
                     ]
                 });
 
-                $(document).on('click', '.pinjamBuku', function(e) {
-                    var id = $(this).data('id');
-                    console.log('ok');
-                });
-
-                // $('body').on('click', '.editBukuPost', function() {
-                //     var id = $(this).data('id');
-                //     $.get("/dx/manajemen-buku" + '/' + id, function(data) {
-                //         $('#editBukuModal').modal('show');
-                //         $('#id').val(data.id);
-                //         $('#edit_nama_buku').val(data.nama_buku);
-                //         $('#edit_author').val(data.author);
-                //     })
-                // });
 
                 // $('#editBukuForm').submit(function(e) {
                 //     e.preventDefault();
@@ -230,6 +224,27 @@
                 //     });
 
                 // }
+                $(document).ready(function() {
+                    $('.js-example-basic-single').select2();
+                });
+
+                $(function() {
+                    $("#tanggal_pinjam").datepicker({
+                        autoHide: true,
+                        zIndex: 2048,
+                        startDate: '-0d',
+                        format: 'dd/mm/yyyy',
+                    });
+
+                    $("#tanggal_kembali").datepicker({
+                        autoHide: true,
+                        zIndex: 2048,
+                        startDate: '-0d',
+                        useCurrent: false,
+                        // minDate: new Date(),
+                        format: 'dd/mm/yyyy',
+                    });
+                });
 
             });
 
