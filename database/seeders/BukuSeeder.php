@@ -18,8 +18,24 @@ class BukuSeeder extends Seeder
     {
         DB::table('table_buku')->insert([
             'user_id' => 1,
-            'nama_buku' => Str::random(10),
-            'author' => Str::random(10),
+            'nama_buku' => 'Malioboro At Midnight',
+            'author' => 'Skysphire',
+            'deskripsi' => 'Novel perjalanan hidup',
+            'status_buku' => 'Ada'
+        ]);
+        DB::table('table_buku')->insert([
+            'user_id' => 1,
+            'nama_buku' => 'Angsa dan kelelawar',
+            'author' => 'Keigo Higashi',
+            'deskripsi' => 'Kisah Misteri yang Dramatis',
+            'status_buku' => 'Ada'
+        ]);
+        DB::table('table_buku')->insert([
+            'user_id' => 1,
+            'nama_buku' => 'KKN di Desa Penari',
+            'author' => 'Simpleman',
+            'deskripsi' => 'novel horor yang dialihwahanakan dari sebuah utas Twitter yang viral.',
+            'status_buku' => 'Ada'
         ]);
     }
 }

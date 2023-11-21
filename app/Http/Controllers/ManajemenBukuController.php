@@ -144,13 +144,6 @@ class ManajemenBukuController extends Controller
                 // dd($item->users);
                 return $item->author;
             })
-            ->addColumn('action', function ($item) {
-                $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $item->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editBukuPost">Edit</a>';
-
-                $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $item->id . '" data-original-title="Delete" class="btn btn-danger btn-sm deleteBukuPost">Delete</a>';
-
-                return $btn;
-            })
             ->addIndexColumn()
             ->make(true);
     }
