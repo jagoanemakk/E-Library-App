@@ -82,13 +82,15 @@
                                 <div class="form-group row">
                                     <label for="example-text-input-small" class="col-3 col-form-label">Tgl Pinjam</label>
                                     <div class="col-9">
-                                        <input type="text" id="tanggal_pinjam" class="form-control">
+                                        <input style="width: 100%;" class="datepicker begin" id="tanggal_pinjam"
+                                            type="text" />
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="example-text-input-small" class="col-3 col-form-label">Tgl Kembali</label>
                                     <div class="col-9">
-                                        <input type="text" id="tanggal_kembali" class="form-control">
+                                        <input style="width: 100%;" class="datepicker end" id="tanggal_pinjam"
+                                            type="text" />
                                     </div>
                                 </div>
                             </div>
@@ -146,107 +148,56 @@
                     ]
                 });
 
-
-                // $('#editBukuForm').submit(function(e) {
-                //     e.preventDefault();
-                //     var formData = new FormData(this);
-                //     $.ajax({
-                //         type: 'POST',
-                //         url: "/dx/manajemen-buku",
-                //         data: formData,
-                //         contentType: false,
-                //         processData: false,
-                //         success: (data) => {
-                //             if (data.status === 201) {
-                //                 $("#editBukuModal").modal('hide');
-                //                 $("#errors").removeClass('d-none');
-                //                 $("#errors").text(data.message);
-                //                 $("#editBukuBtn").html('Simpan');
-                //                 $("#editBukuBtn").attr("disabled", false);
-                //             } else {
-                //                 $("#editBukuModal").modal('hide');
-                //                 $("#success").removeClass('d-none');
-                //                 $("#success").text(data.success);
-                //                 var oTable = $('#primary_table').dataTable();
-                //                 oTable.fnDraw(false);
-                //                 $("#simpanBukuBtn").html('Simpan');
-                //                 $("#simpanBukuBtn").attr("disabled", false);
-                //                 $("#editBukuBtn").html('Simpan');
-                //                 $("#editBukuBtn").attr("disabled", false);
-                //                 $("#logoutBtn").html('Simpan');
-                //                 $("#logoutBtn").attr("disabled", false);
-                //             }
-                //         },
-                //         error: function(data) {
-                //             alert('error');
-                //             console.log(data);
-                //         }
-                //     });
-                // });
-
-                // $(document).on('click', '.deleteBukuPost', function(e) {
-                //     var id = $(this).data('id');
-                //     SwalDelete(id);
-                //     e.preventDefault();
-                // });
-
-                // function SwalDelete(id) {
-                //     Swal.fire({
-                //         title: 'Apakah anda ingin menghapus data?',
-                //         type: 'warning',
-                //         showDenyButton: true,
-                //         confirmButtonText: "Hapus",
-                //         denyButtonText: `Batal`,
-                //         allowOutsideClick: true,
-
-                //         preConfirm: function() {
-                //             return new Promise(function(resolve) {
-                //                 $.ajax({
-                //                         type: "DELETE",
-                //                         url: "/dx/manajemen-buku" + '/' + id,
-                //                     })
-                //                     .done(function(response) {
-                //                         swal.fire('Data berhasil dihapus!', response.message,
-                //                             response.status);
-                //                         // readProducts();
-                //                         var oTable = $('#primary_table').dataTable();
-                //                         oTable.fnDraw(false);
-                //                         $("#simpanBukuBtn").html('Simpan');
-                //                         $("#simpanBukuBtn").attr("disabled", false);
-                //                     })
-                //                     .fail(function() {
-                //                         swal.fire('Oops...', 'Ada yang salah nih !',
-                //                             'error');
-                //                     });
-                //             });
-                //         },
-
-                //     });
-
-                // }
                 $(document).ready(function() {
                     $('.js-example-basic-single').select2();
                 });
 
-                $(function() {
-                    $("#tanggal_pinjam").datepicker({
-                        autoHide: true,
-                        zIndex: 2048,
-                        startDate: '-0d',
-                        format: 'dd/mm/yyyy',
-                    });
-
-                    $("#tanggal_kembali").datepicker({
-                        autoHide: true,
-                        zIndex: 2048,
-                        startDate: '-0d',
-                        useCurrent: false,
-                        // minDate: new Date(),
-                        format: 'dd/mm/yyyy',
-                    });
+                $("#tanggal_pinjam").datepicker({
+                    dateFormat: 'dd/mm/yy'
+                }).on("changeDate", function(e) {
+                    alert("Working");
                 });
 
+
+                // $("#tanggal_pinjam").datepicker({
+                //     autoHide: true,
+                //     zIndex: 2048,
+                //     startDate: '-0d',
+                //     format: 'dd/mm/yyyy',
+                // });
+
+                // $('body').on('click', '#pinjamBukuBtn', function() {
+                //     $('#pinjamBukuModal').modal('show');
+                //     $(".datepicker.begin").datepicker({
+                //         onSelect: function(dateText, inst) {
+                //             alert('ok');
+                //             // Resolve the current date
+                //             // var begin = new Date(this);
+                //             // var d = begin.getDate();
+                //             // var m = begin.getMonth();
+                //             // var y = begin.getFullYear();
+                //             // // Update your target date
+                //             // $(".datepicker.end").datepicker('setDate', new Date(y, m,
+                //             //     d + 2));
+                //             // $(".datepicker.end").datepicker("option", "onSelect", begin);
+
+                //         },
+                //         autoHide: true,
+                //         zIndex: 2048,
+                //         minDate: '+2d',
+                //         maxDate: '+2y',
+                //     });
+
+                //     $(".datepicker.end").datepicker({
+                //         minDate: '+4d',
+                //         maxDate: '+2y',
+                //         autoHide: true,
+                //         zIndex: 2048,
+                //     });
+                // });
+
             });
+
 
             // var spinner =
             //     '<div style="height:20px; width: 20px;" class="spinner-border spinner-border-sm" role="status"><span class="sr-only"></span></div>  Please Wait'
