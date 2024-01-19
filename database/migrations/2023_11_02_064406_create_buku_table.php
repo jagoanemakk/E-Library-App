@@ -14,7 +14,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('table_buku', function (Blueprint $table) {
+        Schema::create('buku', function (Blueprint $table) {
             $table->uuid('id')->primary()->default(Uuid::uuid4());
             $table->foreignUuid('user_id');
             $table->string('nama_buku');

@@ -4,11 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Buku;
 use App\Models\User;
-use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\Datatables;
-use Illuminate\Support\Facades\Validator;
 
 class ManajemenBukuController extends Controller
 {
@@ -50,7 +48,7 @@ class ManajemenBukuController extends Controller
 
         Buku::create($validatedData);
 
-        return redirect('/manajemen-buku')->with('success', 'Data berhasil ditambahkan');
+        return redirect('/manajemen-buku')->with(['success' => 'Data berhasil ditambahkan']);
     }
 
     /**
@@ -132,19 +130,26 @@ class ManajemenBukuController extends Controller
 
     public function listBuku()
     {
-        $list_data = Buku::where('user_id', auth()->user()->id)->with('users');
-        // $list_data = Buku::where('user_id' );
-        // dd($list_data);
-        return Datatables::of($list_data)
-            ->addColumn('nama_buku', function ($item) {
-                // dd($item);
-                return $item->nama_buku;
-            })
-            ->addColumn('author', function ($item) {
-                // dd($item->users);
-                return $item->author;
-            })
-            ->addIndexColumn()
-            ->make(true);
+        if (request()->ajax()) {
+            $list_data = Buku::where('user_id', auth()->user()->id)->with('users');
+            return Datatables::of($list_data)
+                ->addColumn('nama_buku', function ($item) {
+                    // dd($item);
+                    return $item->nama_buku;
+                })
+                ->addColumn('author', function ($item) {
+                    // dd($item->users);
+                    return $item->author;
+                })
+                ->addColumn('action', function ($item) {
+                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $item->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editBukuPost">Edit</a>';
+
+                    $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $item->id . '" data-original-title="Delete" class="btn btn-danger btn-sm deleteBukuPost">Delete</a>';
+
+                    return $btn;
+                })
+                ->addIndexColumn()
+                ->make(true);
+        }
     }
 }

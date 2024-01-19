@@ -10,6 +10,8 @@ class Buku extends Model
 {
     protected $guarded = [];
 
+    public $table = 'buku';
+
     protected static function boot()
     {
         parent::boot();

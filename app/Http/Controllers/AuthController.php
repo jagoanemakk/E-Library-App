@@ -28,9 +28,9 @@ class AuthController extends Controller
                 'password' => 'required|min:5',
             ],
             [
-            'nama.unique' => 'Username sudah digunakan',
-            'email.unique' => 'Email sudah digunakan',
-        ],
+                'nama.unique' => 'Username sudah digunakan',
+                'email.unique' => 'Email sudah digunakan',
+            ],
         );
 
         $validatedData['password'] = Hash::make($validatedData['password']);
