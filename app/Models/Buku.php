@@ -4,22 +4,30 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Ramsey\Uuid\Uuid;
 
 class Buku extends Model
 {
-    use HasFactory;
+    protected $guarded = [];
 
-    protected $guarded = ['id'];
+    protected static function boot()
+    {
+        parent::boot();
 
-    public $table = "table_buku";
+        static::creating(function ($model) {
+            $model->id = Uuid::uuid4()->toString();
+        });
+    }
 
-    protected $fillable = [
-        'nama_buku',
-        'author',
-        'user_id',
-        'deskripsi',
-        'status_buku',
-    ];
+    public function getIncrementing()
+    {
+        return false;
+    }
+
+    public function getKeyType()
+    {
+        return 'string';
+    }
 
     public function users()
     {

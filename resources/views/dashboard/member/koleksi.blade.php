@@ -89,7 +89,7 @@
                                 <div class="form-group row">
                                     <label for="example-text-input-small" class="col-3 col-form-label">Tgl Kembali</label>
                                     <div class="col-9">
-                                        <input style="width: 100%;" class="datepicker end" id="tanggal_pinjam"
+                                        <input style="width: 100%;" class="datepicker end" id="tanggal_kembali"
                                             type="text" />
                                     </div>
                                 </div>
@@ -152,49 +152,24 @@
                     $('.js-example-basic-single').select2();
                 });
 
-                $("#tanggal_pinjam").datepicker({
-                    dateFormat: 'dd/mm/yy'
-                }).on("changeDate", function(e) {
-                    alert("Working");
+                $(function() {
+                    $("#tanggal_pinjam").datepicker({
+                        zIndex: 2048,
+                        autoHide: true,
+                        dateFormat: 'dd/mm/yy',
+                        startDate: '-0d',
+                        // onSelect: function(dateText, inst) {
+                        //     console.log(dateText);
+                        // }
+                    });
+                    
+                    $("#tanggal_kembali").datepicker({
+                        zIndex: 2048,
+                        autoHide: true,
+                        dateFormat: 'dd/mm/yy',
+                        startDate: '-0d',
+                    });
                 });
-
-
-                // $("#tanggal_pinjam").datepicker({
-                //     autoHide: true,
-                //     zIndex: 2048,
-                //     startDate: '-0d',
-                //     format: 'dd/mm/yyyy',
-                // });
-
-                // $('body').on('click', '#pinjamBukuBtn', function() {
-                //     $('#pinjamBukuModal').modal('show');
-                //     $(".datepicker.begin").datepicker({
-                //         onSelect: function(dateText, inst) {
-                //             alert('ok');
-                //             // Resolve the current date
-                //             // var begin = new Date(this);
-                //             // var d = begin.getDate();
-                //             // var m = begin.getMonth();
-                //             // var y = begin.getFullYear();
-                //             // // Update your target date
-                //             // $(".datepicker.end").datepicker('setDate', new Date(y, m,
-                //             //     d + 2));
-                //             // $(".datepicker.end").datepicker("option", "onSelect", begin);
-
-                //         },
-                //         autoHide: true,
-                //         zIndex: 2048,
-                //         minDate: '+2d',
-                //         maxDate: '+2y',
-                //     });
-
-                //     $(".datepicker.end").datepicker({
-                //         minDate: '+4d',
-                //         maxDate: '+2y',
-                //         autoHide: true,
-                //         zIndex: 2048,
-                //     });
-                // });
 
             });
 

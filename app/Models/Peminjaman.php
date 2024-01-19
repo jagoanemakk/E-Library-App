@@ -4,23 +4,31 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Ramsey\Uuid\Uuid;
 
 class Peminjaman extends Model
 {
-    use HasFactory;
 
-    protected $guarded = ['id'];
+    protected $guarded = [];
 
-    public $table = "peminjaman";
+    protected static function boot()
+    {
+        parent::boot();
 
-    protected $fillable = [
-        'user_id',
-        'buku_id',
-        'tanggal_pinjam',
-        'tanggal_kembali',
-        'denda',
-        'status_pinjam',
-    ];
+        static::creating(function ($model) {
+            $model->id = Uuid::uuid4()->toString();
+        });
+    }
+
+    public function getIncrementing()
+    {
+        return false;
+    }
+
+    public function getKeyType()
+    {
+        return 'string';
+    }
 
     public function users()
     {

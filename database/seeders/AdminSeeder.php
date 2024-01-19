@@ -17,10 +17,22 @@ class AdminSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'nama' => Str::random(10),
-            'email' => Str::random(10) . '@gmail.com',
+            'nama' => 'pendik',
+            'email' => 'jagoanemakk1234@gmail.com',
+            'hak_akses' => 'Super Admin',
+            'password' => Hash::make('12345'),
+        ]);
+        DB::table('users')->insert([
+            'nama' => 'alfin',
+            'email' => 'alfianzah123@gmail.com',
             'hak_akses' => 'Admin',
-            'password' => Hash::make('password'),
+            'password' => Hash::make('12345'),
+        ]);
+        DB::table('users')->insert([
+            'nama' => 'kuncara',
+            'email' => 'jkuncara123@gmail.com',
+            'hak_akses' => 'Member',
+            'password' => Hash::make('12345'),
         ]);
     }
 }
