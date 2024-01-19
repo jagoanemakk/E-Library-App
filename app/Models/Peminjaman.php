@@ -11,6 +11,8 @@ class Peminjaman extends Model
 
     protected $guarded = [];
 
+    public $table = 'peminjaman';
+
     protected static function boot()
     {
         parent::boot();

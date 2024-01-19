@@ -31,8 +31,9 @@
     <!-- Custom styles for this template-->
     <link href="sb-admin2/css/sb-admin-2.min.css" rel="stylesheet" />
 
-    {{-- fltpicker --}}
-    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> --}}
+    {{-- IzI Toast --}}
+    <link rel="stylesheet" href="resources\css\iziToast.css">
+    <link rel="stylesheet" href="resources\css\iziToast.min.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.0.10/datepicker.min.css">
     <link href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" />
@@ -152,10 +153,10 @@
     {{-- Datepicker --}}
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.0.10/datepicker.min.js"></script>
-    {{-- <script src="https://code.jquery.com/jquery-1.11.3.js"></script> --}}
-    {{-- <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script> --}}
-    {{-- <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script> --}}
+
+    {{-- IzI Toast --}}
+    <script src="js\iziToast.js"></script>
+    <script src="js\iziToast.min.js"></script>
 
     <script>
         $(document).ready(function() {
@@ -172,7 +173,24 @@
         });
     </script>
 
+    <script>
+        @if (session()->has('success'))
+            iziToast.success({
+                title: 'Success!',
+                message: '{{ session('success') }}',
+                position: 'topRight'
+            });
+        @elseif (session()->has('error'))
+            iziToast.error({
+                title: 'Error!',
+                message: '{{ session('error') }}',
+                position: 'topRight'
+            });
+        @endif
+    </script>
+
     @stack('scripts')
+
 </body>
 
 </html>
