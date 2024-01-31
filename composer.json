@@ -14,6 +14,7 @@
         "laravel/framework": "^9.0",
         "laravel/sanctum": "^2.14",
         "laravel/tinker": "^2.7",
+        "nesbot/carbon": "^2.72",
         "ramsey/uuid": "^4.7",
         "yajra/laravel-datatables-oracle": "^10.3.1"
     },

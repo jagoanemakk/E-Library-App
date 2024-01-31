@@ -4,12 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Buku;
 use App\Models\Peminjaman;
-use App\Models\User;
-use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Yajra\Datatables\Datatables;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 
 class MemberController extends Controller
@@ -22,7 +19,7 @@ class MemberController extends Controller
     public function index()
     {
         return view('dashboard.member.koleksi', [
-            'data' => Buku::where('status_buku', '=', 'Ada')->with('users')->get(),
+            'data' => Buku::where('status', '=', 'Ada')->with('users')->get(),
         ]);
     }
 
@@ -49,62 +46,38 @@ class MemberController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function detailBuku(Request $request)
     {
         $book = Buku::find($request->id);
 
         return response()->json($book);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function actionPinjam(Request $request)
     {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+        $book = Buku::where('id', $request->id)->first();
+        $book->update([
+            'status' => 'Dipinjam'
+        ]);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+        $book = Peminjaman::create([
+            'user_id' => $request->id,
+            'buku_id' => $request->buku_id,
+            'tanggal_pinjam' => Carbon::now(),
+            'tanggal_kembali' => Carbon::now()->addDays(5)
+        ]);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        if ($book) {
+            return redirect()->route('admin.game-setting.index')->with(['success' => 'Buku Berhasil Dipinjam']);
+        } else {
+            return redirect()->route('admin.game-setting.index')->with(['error' => 'Gagal']);
+        }
     }
 
     public function listKoleksi()
     {
-        // $list_data = Buku::where('user_id', auth()->user()->id)->with('users');
-        $list_data = Buku::where('status_buku', '=', 'Ada');
+        $list_data = Buku::where('status', '=', 'Ada');
 
         return Datatables::of($list_data)
             ->addColumn('nama_buku', function ($item) {
@@ -120,11 +93,10 @@ class MemberController extends Controller
                 return $item->deskripsi;
             })
             ->addColumn('status', function ($item) {
-                // dd($item->users);
-                return $item->status_buku;
+                return $item->status;
             })
             ->addColumn('action', function ($item) {
-                $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $item->id . '" data-original-title="Pinjam" class="edit btn btn-primary btn-sm pinjamBuku">Pinjam</a>';
+                $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $item->id . '" data-original-title="Pinjam" class="pinjamBuku"><i class="fas fa-solid fa-cart-plus"></i></a>';
 
                 return $btn;
             })
@@ -135,7 +107,7 @@ class MemberController extends Controller
     public function listPinjam()
     {
         $list_data = Peminjaman::where('user_id', auth()->user()->id)
-        ->with('users', 'buku');
+            ->with('users', 'buku');
 
         return Datatables::of($list_data)
             ->addColumn('nama_buku', function ($item) {
@@ -149,10 +121,6 @@ class MemberController extends Controller
             ->addColumn('tanggal_kembali', function ($item) {
                 // dd($item->users);
                 return $item->tanggal_kembali;
-            })
-            ->addColumn('status', function ($item) {
-                // dd($item->users);
-                return $item->status_pinjam;
             })
             ->addColumn('denda', function ($item) {
                 // dd($item->users);

@@ -18,9 +18,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 // Route Auth
 Route::middleware(['guest'])->group(function () {
@@ -67,11 +64,11 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/manajemen-buku/{id}', [ManajemenBukuController::class, 'destroy']);
         Route::get('/manajemen-buku', [ManajemenBukuController::class, 'listBuku']);
     });
-    
-    // Route Member
+
     Route::prefix('xt')->group(function () {
         Route::get('/koleksi', [MemberController::class, 'listKoleksi']);
-        Route::post('/koleksi', [MemberController::class, 'store']);
+        Route::get('/koleksi/{id}', [MemberController::class, 'detailBuku']);
+        Route::post('/koleksi', [MemberController::class, 'actionPinjam']);
         Route::get('/library', [MemberController::class, 'listPinjam']);
     });
 });
